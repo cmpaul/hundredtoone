@@ -13,16 +13,35 @@
 	<script defer src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 </head>
 <body>
+	<nav class="navbar navbar-light bg-light">
+		<div class="container">
+			<a class="navbar-brand" href="/">💯 to 🏆</a>
+		</div>
+	</nav>
 	<main>
-		<h1>
-			<a href="/">💯 to 🏆</a>
-		</h1>		
-		<form action="/session" method="POST">
-			<button>Start!</button>
-		</form>
-		<hr />
-		<h2>How does it work?</h2>
-		<p>Click the button and get started generating ideas. The faster you go, the more you'll tap into the power of your subconscious mind, overruling the urge of your conscious self to judge or second guess your gut.</p>
+		<div class="container">
+			<form action="/brainstorm" method="POST">
+				<div class="d-grid gap-2 col-lg-4 col-sm-6 mx-auto">
+					<button class="btn btn-lg btn-primary" type="submit">Start!</button>
+					<input name="title" placeholder="(Optional) Title" />
+					<input name="password" placeholder="(Optional) Password" />
+				</div>
+			</form>
+			<hr />
+			<h2>How does it work?</h2>
+			<p>
+				Click the button and get started generating ideas. 
+				The faster you go, the more you'll tap into the power of your subconscious mind,
+				overruling the urge of your conscious self to judge or second guess your gut.
+			</p>
+			<h3>🤔✍📝</h3>
+			<h2>Share with friends</h2>
+			<p>
+				Once you create a brainstorm session, share it with friends to collaborate in real time.
+				Group similar ideas and vote for your favorites. Harness the power of the group brain!
+			</p>
+			<h3>⚡🧠🧠🧠⚡</h3>
+		</div>
 	</main>
 </body>
 </html>

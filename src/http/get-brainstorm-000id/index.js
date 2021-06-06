@@ -1,21 +1,17 @@
+/**
+ * This function looks up a session ID, ensures the user has access to it,
+ * and generates the page for the Svelte app and websocket connection.
+ */
+
 const arc = require("@architect/functions");
 const staticHelper = arc.http.helpers.static;
 
-function getWsUrl() {
-  const env = process.env.NODE_ENV
-  const testing = 'ws://localhost:3333'
-  const deployed = process.env.ARC_WSS_URL;
-  const production = 'fixme: these urls are printed after create'
-  if (env === 'testing' || env === 'development') {
-    return testing;
-  }
-  return deployed;
-}
-
 exports.handler = async function http (req) {
-  const sessionId = req.pathParameters['sessionId'];
+  const id = req.pathParameters['id'];
+
+  // TODO: Check user's session for password
   
-  console.log(`GET /session/:sessionId called with sessionId ${sessionId}`);
+  console.log(`GET /brainstorm/:id called with id ${id}`);
 
   return {
     statusCode: 200,
@@ -27,15 +23,15 @@ exports.handler = async function http (req) {
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width,initial-scale=1'>
       
-        <title>hundredto.one</title>
+        <title>hundredto.one - Brainstorm ${id}</title>
       
         <link rel='icon' type='image/png' href='/favicon.png'>
         <link rel='stylesheet' href='${staticHelper('/global.css')}'>
         <link rel='stylesheet' href='${staticHelper('/build/bundle.css')}'>
         <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x' crossorigin='anonymous'>
         <script type='text/javascript'>
-          window.SESSION_ID = '${sessionId}';
-          window.WS_URL = '${getWsUrl()}';
+          window.BRAINSTORM_ID = '${id}';
+          window.WS_URL = '${process.env.ARC_WSS_URL}';
         </script>
       
         <script defer src='${staticHelper('/build/bundle.js')}'></script>

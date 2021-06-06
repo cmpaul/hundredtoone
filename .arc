@@ -7,7 +7,7 @@ hundredtoone
 # serverless code is in /src/ws/*
 
 @http
-post /session
-get /session/:sessionId
+post /brainstorm
+get /brainstorm/:id
 
 @static
