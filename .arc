@@ -10,4 +10,11 @@ hundredtoone
 post /brainstorm
 get /brainstorm/:id
 
+@tables
+brainstorms
+  encrypt true
+  id *String
+  title String
+  password String
+
 @static

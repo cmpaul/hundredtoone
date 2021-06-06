@@ -10,8 +10,11 @@ exports.handler = async function http (req) {
   const id = req.pathParameters['id'];
 
   // TODO: Check user's session for password
-  
-  console.log(`GET /brainstorm/:id called with id ${id}`);
+
+  const data = await arc.tables();
+  const brainstorm = await data.brainstorms.get({ id });
+  console.log(`GET /brainstorm/:id called with id ${id}: ${JSON.stringify(brainstorm)}`);
+  const title = brainstorm.title || null;
 
   return {
     statusCode: 200,
@@ -30,7 +33,10 @@ exports.handler = async function http (req) {
         <link rel='stylesheet' href='${staticHelper('/build/bundle.css')}'>
         <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x' crossorigin='anonymous'>
         <script type='text/javascript'>
-          window.BRAINSTORM_ID = '${id}';
+          window.BRAINSTORM = {
+            id: '${id}',
+            title: ${title !== null ? `'${title}'` : 'null'},
+          };
           window.WS_URL = '${process.env.ARC_WSS_URL}';
         </script>
       

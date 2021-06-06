@@ -3,7 +3,8 @@
   import Nav from './components/Nav.svelte';
 
   let value = '';
-  const brainstormId = window.BRAINSTORM_ID;
+  const brainstormId = window.BRAINSTORM.id;
+  const brainstormTitle = window.BRAINSTORM.title;
   const wsUrl = window.WS_URL;
   const ws = new WebSocket(wsUrl);
   ws.onopen = () => {
@@ -45,7 +46,7 @@
   </Row>
   <Row>
     <Col>
-      <p>Starting brainstorm {brainstormId}</p>
+      <p>Starting brainstorm {brainstormTitle == null ? brainstormId : brainstormTitle}</p>
     </Col>
   </Row>
   <Row>

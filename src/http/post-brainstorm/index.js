@@ -9,13 +9,18 @@ exports.handler = async function http (req) {
   const reqBody = parseBody(req);
   const title = reqBody.title;
   const password = reqBody.password;
-
+  
   console.log(`POST /brainstorm (title '${title}', password '${password}')`);
-  const maxId = 999999999
-  let id = String(~~(Math.random() * maxId)).padStart(maxId.length, '0');
+  const maxId = 999999;
+  let id = String(~~(Math.random() * maxId)).padStart(maxId.length, '0') + Date.now();
 
-  // TODO: Get password parameter
-  // TODO: Create brainstorm in DB
+  const data = await arc.tables();
+  await data.brainstorms.put({
+    id,
+    title,
+    password
+  });
+
   // TODO: Set brainstorm access on session
 
   return {
