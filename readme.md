@@ -1,8 +1,8 @@
-# Hundred to One
+# hundredto.one
 
-An app that helps you brainstorm 100 ideas, prioritize them, and whittle them down to 1. 
+Generate 100 ideas quickly. Prioritize the top 10 to investigate. Take critical action on the top idea. Use it solo or with friends!
 
-Use it solo or with friends!
+Based on Nick Dentley's blog post, [100:10:1 - a game design method you can use to design anything](https://www.nickbentley.games/the-100-10-1-method-for-game-design/)
 
 Built with [Svelte](https://svelte.dev) and [Begin](https://begin.com).
 
