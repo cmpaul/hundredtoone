@@ -46,7 +46,7 @@
   </Row>
   <Row>
     <Col>
-      <p>Starting brainstorm {brainstormTitle == null ? brainstormId : brainstormTitle}</p>
+      <p>{brainstormTitle == null ? brainstormId : brainstormTitle}</p>
     </Col>
   </Row>
   <Row>

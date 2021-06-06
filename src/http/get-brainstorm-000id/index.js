@@ -6,14 +6,18 @@
 const arc = require("@architect/functions");
 const staticHelper = arc.http.helpers.static;
 
+const Hashids = require('hashids/cjs');
+const hashids = new Hashids();
+
 exports.handler = async function http (req) {
-  const id = req.pathParameters['id'];
+  const hashedId = req.pathParameters['id'];
+  const id = parseInt(hashids.decode(hashedId));
 
   // TODO: Check user's session for password
 
   const data = await arc.tables();
   const brainstorm = await data.brainstorms.get({ id });
-  console.log(`GET /brainstorm/:id called with id ${id}: ${JSON.stringify(brainstorm)}`);
+  console.log(`GET /brainstorm/:id called with id ${hashedId}: ${JSON.stringify(brainstorm)}`);
   const title = brainstorm.title || null;
 
   return {
@@ -34,7 +38,7 @@ exports.handler = async function http (req) {
         <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x' crossorigin='anonymous'>
         <script type='text/javascript'>
           window.BRAINSTORM = {
-            id: '${id}',
+            id: '${hashedId}',
             title: ${title !== null ? `'${title}'` : 'null'},
           };
           window.WS_URL = '${process.env.ARC_WSS_URL}';

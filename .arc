@@ -13,7 +13,7 @@ get /brainstorm/:id
 @tables
 brainstorms
   encrypt true
-  id *String
+  id *Number
   title String
   password String
 
