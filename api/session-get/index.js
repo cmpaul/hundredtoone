@@ -1,6 +1,6 @@
 exports.handler = async function http (req) {
   await new Promise(r => setTimeout(r, 2000));
-  console.log(`GET /:sessionId called with ${req.pathParameters}`)
+  console.log(`GET /session called with ${JSON.stringify(req.pathParameters)}`)
   return {
     headers: {
       'content-type': 'application/json; charset=utf8',

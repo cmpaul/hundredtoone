@@ -12,9 +12,15 @@
     "app": "svelte-app",
     "http": [
       {
-        "/api": {
+        "/session": {
+          "method": "post",
+          "src": "/src/http/session-post"
+        }
+      },
+      {
+        "/session/:sessionId": {
           "method": "get",
-          "src": "/api"
+          "src": "/src/http/session-get"
         }
       }
     ],
@@ -33,15 +39,17 @@
     "@rollup/plugin-node-resolve": "^11.0.0",
     "eslint": "^7.19.0",
     "eslint-plugin-svelte3": "",
+    "query-string": "^7.0.0",
     "rollup": "^2.40.0",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-terser": "^7.0.0",
-    "svelte": "^3.35.0"
+    "svelte": "^3.38.2"
   },
   "dependencies": {
     "@architect/sandbox": "^3.3.7",
-    "@begin/data": "^1.2.3"
+    "@begin/data": "^1.2.3",
+    "sveltestrap": "^5.1.1"
   }
 }
