@@ -1,14 +1,12 @@
-<img src="https://static.begin.app/node-svelte/readme-banner.png" width="788">
+# Hundred to One
+
+An app that helps you brainstorm 100 ideas, prioritize them, and whittle them down to 1. 
+
+Use it solo or with friends!
+
+Built with [Svelte](https://svelte.dev) and [Begin](https://begin.com).
 
 [![Begin build status](https://buildstatus.begin.app/cake-gab/status.svg)](https://begin.com)
-
-[Svelte](https://svelte.dev)'s starter app, extended by [Begin](https://begin.com)-based API endpoints.
-
-## Deploy your own
-
-[![Deploy to Begin](https://static.begin.com/deploy-to-begin.svg)](https://begin.com/apps/create?template=https://github.com/begin-examples/node-svelte)
-
-Deploy your own clone of this app to Begin!
 
 ## Getting started
 
