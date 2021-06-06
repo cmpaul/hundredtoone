@@ -7,7 +7,8 @@
     "dev": "rollup -c -w",
     "lint": "eslint src --fix",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "arc sandbox"
+    "start": "arc sandbox",
+    "deploy": "arc deploy"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
