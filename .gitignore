@@ -3,3 +3,6 @@ node_modules/
 
 .arc-env
 .DS_Store
+preferences.arc
+sam.json
+sam.yaml
