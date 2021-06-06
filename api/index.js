@@ -1,4 +1,5 @@
 exports.handler = async function http (req) {
+  await new Promise(r => setTimeout(r, 2000));
   console.log('Begin API called')
   return {
     headers: {
