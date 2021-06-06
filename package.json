@@ -1,38 +1,13 @@
 {
-  "name": "begin-app",
+  "name": "hundredtoone",
   "version": "0.0.0",
-  "description": "Begin basic Svelte app + API",
+  "description": "",
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
     "lint": "eslint src --fix",
-    "start": "npx sandbox"
-  },
-  "arc": {
-    "app": "svelte-app",
-    "http": [
-      {
-        "/session": {
-          "method": "post",
-          "src": "/src/http/session-post"
-        }
-      },
-      {
-        "/session/:sessionId": {
-          "method": "get",
-          "src": "/src/http/session-get"
-        }
-      }
-    ],
-    "tables": [
-      {
-        "data": {
-          "scopeID": "*String",
-          "dataID": "**String",
-          "ttl": "TTL"
-        }
-      }
-    ]
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "arc sandbox"
   },
   "devDependencies": {
     "@rollup/plugin-commonjs": "^17.0.0",
@@ -45,11 +20,12 @@
     "rollup-plugin-livereload": "^2.0.0",
     "rollup-plugin-svelte": "^7.1.0",
     "rollup-plugin-terser": "^7.0.0",
-    "svelte": "^3.38.2"
+    "svelte": "^3.38.2",
+    "sveltestrap": "^5.1.1"
   },
   "dependencies": {
-    "@architect/sandbox": "^3.3.7",
-    "@begin/data": "^1.2.3",
-    "sveltestrap": "^5.1.1"
+    "@architect/architect": "^8.6.0",
+    "@architect/functions": "^3.14.1",
+    "@begin/data": "^1.2.3"
   }
 }
