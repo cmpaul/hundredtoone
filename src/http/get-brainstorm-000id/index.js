@@ -11,11 +11,18 @@ const hashids = new Hashids();
 exports.handler = async function http (req) {
   const hashedId = req.pathParameters['id'];
   const id = parseInt(hashids.decode(hashedId));
+  
+  const data = await arc.tables();
+  const brainstorm = await data.brainstorms.get({ id });
+
+  // TODO: What happens if it's not found? 404?
+
+  console.log(`GET /brainstorm/:id called with id ${hashedId}: ${JSON.stringify(brainstorm)}`);
 
   const session = await arc.http.session.read(req);
   console.log(`session = ${JSON.stringify(session)}`);
   const authorized = session.authorized || {};
-  if (authorized[hashedId] !== true) {
+  if (brainstorm.password && authorized[hashedId] !== true) {
     // User needs to enter a password
     return {
       statusCode: 200,
@@ -23,10 +30,6 @@ exports.handler = async function http (req) {
       body: Layout({ id: hashedId, needsAuth: true })
     }
   }
-
-  const data = await arc.tables();
-  const brainstorm = await data.brainstorms.get({ id });
-  console.log(`GET /brainstorm/:id called with id ${hashedId}: ${JSON.stringify(brainstorm)}`);
 
   return {
     statusCode: 200,
