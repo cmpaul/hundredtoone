@@ -4,6 +4,7 @@
  * - non 200 response will disconnect the client socket
  */
 exports.handler = async function ws(event) {
+  // TODO: Add authentication
   console.log('ws-connect called with', event)
   return {statusCode: 200}
 }

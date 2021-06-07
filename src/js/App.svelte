@@ -4,7 +4,7 @@
 
   let value = '';
   const brainstormId = window.BRAINSTORM.id;
-  const brainstormTitle = window.BRAINSTORM.title;
+  const brainstormTitle = window.BRAINSTORM.title || null;
   const wsUrl = window.WS_URL;
   const ws = new WebSocket(wsUrl);
   ws.onopen = () => {
@@ -46,7 +46,7 @@
   </Row>
   <Row>
     <Col>
-      <p>{brainstormTitle == null ? brainstormId : brainstormTitle}</p>
+      <p>{brainstormTitle === null ? `Brainstorm: ${brainstormId}` : brainstormTitle}</p>
     </Col>
   </Row>
   <Row>

@@ -24,14 +24,20 @@ exports.handler = async function http (req) {
     password
   });
 
-  // TODO: Set brainstorm access on session
-
   const hashedId = hashids.encode(id);
-  console.log(`id = ${id}, hashedId = ${hashedId}`);
+
+  const session = await arc.http.session.read(req);
+  console.log(`session = ${JSON.stringify(session)}`);
+  const authorized = session.authorized || {};
+  authorized[hashedId] = true;
+  session.authorized = authorized;
+  const cookie = await arc.http.session.write(session);
+  console.log(`new cookie = ${JSON.stringify(cookie)}`);
 
   return {
     headers: {
-      'Location': `/brainstorm/${hashedId}`
+      'Location': `/brainstorm/${hashedId}`,
+      'set-cookie': cookie,
     },
     statusCode: 302
   }
