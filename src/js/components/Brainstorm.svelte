@@ -1,28 +1,11 @@
-<div class="container">
-  <Row>
-    <Col>
-      <p>{brainstormTitle === null ? `Brainstorm: ${brainstormId}` : brainstormTitle}</p>
-    </Col>
-  </Row>
-  <Row>
-    <Col>
-      <input on:keyup|preventDefault={onkeyup}/>
-    </Col>
-  </Row>
-  <Row>
-    <Col>
-      <textarea bind:value/>
-    </Col>
-  </Row>
-</div>
-
 <script>
+  export let id;
+  export let title;
+  export let wsUrl;
+
   import { Col, Row } from 'sveltestrap';
 
   let value = '';
-  const brainstormId = brainstorm.id;
-  const brainstormTitle = brainstorm.title || null;
-  const wsUrl = window.WS_URL;
   const ws = new WebSocket(wsUrl);
   ws.onopen = () => {
     value += `${new Date(Date.now()).toISOString()} - opened\n`;
@@ -41,6 +24,24 @@
     ws.send(JSON.stringify({text}));
   }
 </script>
+
+<div class="container">
+  <Row>
+    <Col>
+      <p>{title === null ? `Brainstorm: ${id}` : title}</p>
+    </Col>
+  </Row>
+  <Row>
+    <Col>
+      <input on:keyup|preventDefault={onkeyup}/>
+    </Col>
+  </Row>
+  <Row>
+    <Col>
+      <textarea bind:value/>
+    </Col>
+  </Row>
+</div>
 
 <style>
   input {

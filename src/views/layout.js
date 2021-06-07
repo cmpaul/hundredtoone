@@ -1,11 +1,18 @@
-const utils = require('./utils');
 const arc = require("@architect/functions");
 const staticHelper = arc.http.helpers.static;
 
 module.exports = function Layout(props) {
   props = props || {};
 
-  const brainstorm = utils.sanitize(props.brainstorm);
+  const appVars = {
+    needsAuth: !!props.needsAuth,
+    id: props.id,
+    wsUrl: process.env.ARC_WSS_URL
+  };
+
+  if (!props.needsAuth) {
+    appVars.title = props.title;
+  }
 
   return `
 <!DOCTYPE html>
@@ -21,8 +28,7 @@ module.exports = function Layout(props) {
   <link rel='stylesheet' href='${staticHelper('/build/bundle.css')}'>
   <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css' rel='stylesheet' integrity='sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x' crossorigin='anonymous'>
   <script type='text/javascript'>
-    window.BRAINSTORM = ${brainstorm ? JSON.stringify(brainstorm) : 'null'};
-    window.WS_URL = '${process.env.ARC_WSS_URL}';
+    window.HUNDRED_TO_ONE = ${JSON.stringify(appVars)};
   </script>
 
   <script defer src='${staticHelper('/build/bundle.js')}'></script>

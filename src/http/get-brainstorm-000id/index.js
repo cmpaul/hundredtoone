@@ -16,22 +16,21 @@ exports.handler = async function http (req) {
   console.log(`session = ${JSON.stringify(session)}`);
   const authorized = session.authorized || {};
   if (authorized[hashedId] !== true) {
+    // User needs to enter a password
     return {
-      headers: {
-        'Location': `/`,
-      },
-      statusCode: 302
+      statusCode: 200,
+      headers: { 'content-type': 'text/html; charset=utf8' },
+      body: Layout({ id: hashedId, needsAuth: true })
     }
   }
 
   const data = await arc.tables();
   const brainstorm = await data.brainstorms.get({ id });
   console.log(`GET /brainstorm/:id called with id ${hashedId}: ${JSON.stringify(brainstorm)}`);
-  const title = brainstorm.title || null;
 
   return {
     statusCode: 200,
     headers: { 'content-type': 'text/html; charset=utf8' },
-    body: Layout({ brainstorm })
+    body: Layout({ id: hashedId, title: brainstorm.title || null })
   }
 }
