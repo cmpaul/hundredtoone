@@ -9,7 +9,7 @@ const Hashids = require('hashids/cjs');
 const hashids = new Hashids();
 
 /**
- * 
+ * TODO: Replace this with the shared module function
  * @param {String} hashedId 
  * @returns boolean
  */

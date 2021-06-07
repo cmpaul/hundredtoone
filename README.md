@@ -20,7 +20,7 @@ npm run dev
 
 ## Deploy
 
-After [setting up AWS credentials](https://arc.codes/docs/en/guides/get-started/detailed-aws-setup), the app can be deployed using:
+After installing Architect and [setting up AWS credentials](https://arc.codes/docs/en/guides/get-started/detailed-aws-setup), the app can be deployed using:
 
 ```
 npm deploy [production]

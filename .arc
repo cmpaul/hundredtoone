@@ -2,9 +2,6 @@
 hundredtoone
 
 @ws
-# no further config required
-# client code is in /public
-# serverless code is in /src/ws/*
 
 @http
 post /brainstorm
@@ -16,5 +13,8 @@ brainstorms
   id *Number
   title String
   password String
+ws
+  brainstormId *String
+  connectionIds StringSet
 
 @static
