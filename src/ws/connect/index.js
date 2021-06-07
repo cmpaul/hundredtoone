@@ -1,14 +1,22 @@
-/**
- * notes:
- * - verify event.headers.Origin to enforce same-origin
- * - non 200 response will disconnect the client socket
- */
+const auth = require('@architect/shared/auth');
+const { findBrainstorm } = require('@architect/shared/brainstorms');
 
-const arc = require("@architect/functions");
-
+// TODO: - verify event.headers.Origin to enforce same-origin
 exports.handler = async function ws(event) {
-  // TODO: Make sure user is auth'd, otherwise redirect to login
+  const hashedId = event.queryStringParameters.id || null;
+  const brainstorm = findBrainstorm(hashedId);
+  if (!brainstorm) {
+    console.log(`ws-connect: No brainstorm found for ID ${hashedId}`);
+    return {statusCode: 404};
+  }
+
+  const isAuthorized = await auth.isAuthorized(event, brainstorm);
+  if (!isAuthorized) {
+    console.log(`ws-connect: Not authorized to access brainstorm ${hashedId}`);
+    return {statusCode: 401};
+  }
+
   // TODO: Get connectionId and store it
-  console.log('ws-connect called with', event)
+
   return {statusCode: 200}
 }
