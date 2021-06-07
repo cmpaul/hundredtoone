@@ -24,8 +24,6 @@ exports.handler = async function http (req) {
     }
   }
 
-  // TODO: Check user's session for password
-
   const data = await arc.tables();
   const brainstorm = await data.brainstorms.get({ id });
   console.log(`GET /brainstorm/:id called with id ${hashedId}: ${JSON.stringify(brainstorm)}`);
