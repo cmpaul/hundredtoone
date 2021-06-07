@@ -14,6 +14,15 @@ exports.handler = async function http (req) {
   
   const data = await arc.tables();
   const brainstorm = await data.brainstorms.get({ id });
+  if (!brainstorm) {
+    console.log(`No brainstorm found for id ${hashedId} (${id})`);
+    return {
+      statusCode: 302,
+      headers: {
+        'Location': '/'
+      }
+    }
+  }
 
   // TODO: What happens if it's not found? 404?
 

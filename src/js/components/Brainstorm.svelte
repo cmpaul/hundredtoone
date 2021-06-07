@@ -6,7 +6,7 @@
   import { Col, Row } from 'sveltestrap';
 
   let value = '';
-  const ws = new WebSocket(wsUrl);
+  const ws = new WebSocket(wsUrl + `?id=${id}`);
   ws.onopen = () => {
     value += `${new Date(Date.now()).toISOString()} - opened\n`;
   }
