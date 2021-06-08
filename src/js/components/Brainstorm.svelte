@@ -6,7 +6,7 @@
   import { Col, Row } from 'sveltestrap';
 
   let value = '';
-  const ws = new WebSocket(wsUrl + `?id=${id}`);
+  const ws = new WebSocket(wsUrl);
   ws.onopen = () => {
     value += `${new Date(Date.now()).toISOString()} - opened\n`;
   }
@@ -21,7 +21,7 @@
     if (e.key != 'Enter') return;
     const text = e.target.value;
     e.target.value = '';
-    ws.send(JSON.stringify({text}));
+    ws.send(JSON.stringify({ text }));
   }
 </script>
 
@@ -33,7 +33,7 @@
   </Row>
   <Row>
     <Col>
-      <input on:keyup|preventDefault={onkeyup}/>
+      <input on:keyup|preventDefault={onkeyup} placeholder="Type a message and hit Enter..." />
     </Col>
   </Row>
   <Row>
@@ -50,7 +50,7 @@
   }
   textarea {
     width: 100%;
-    height: 100%;
+    height: 600px;
     font-family:'Courier New', Courier, monospace;
   }
 </style>

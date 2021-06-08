@@ -13,8 +13,11 @@ brainstorms
   id *Number
   title String
   password String
-ws
+brainstormConnections
   brainstormId *String
   connectionIds StringSet
+connectionBrainstorm
+  connectionId *String
+  brainstormId String
 
 @static

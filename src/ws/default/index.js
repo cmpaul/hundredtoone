@@ -1,21 +1,36 @@
-let arc = require('@architect/functions')
+let arc = require('@architect/functions');
+const auth = require('@architect/shared/auth');
+const { findBrainstorm } = require('@architect/shared/brainstorms');
 
-/**
- * append a timestamp and echo the message back to the connectionId
- */
 exports.handler = async function ws(event) {
-
-  console.log('ws-default called with', event)
-
-  let timestamp = new Date().toISOString()
   let connectionId = event.requestContext.connectionId
-  let message = JSON.parse(event.body)
-  let text = `${timestamp} - Echoing ${message.text}`
+  let { text } = JSON.parse(event.body);
 
-  await arc.ws.send({
-    id: connectionId,
-    payload: {text}
-  })
+  // Look up the brainstorm
+  const data = await arc.tables();
+  const { brainstormId } = await data.connectionBrainstorm.get({ connectionId });
 
-  return {statusCode: 200}
+  const brainstorm = findBrainstorm(brainstormId);
+  if (!brainstorm) {
+    console.log(`ws-connect: No brainstorm found for ID ${brainstormId}`);
+    return { statusCode: 404 };
+  }
+
+  const isAuthorized = await auth.isAuthorized(event, brainstorm);
+  if (!isAuthorized) {
+    console.log(`ws-connect: Not authorized to access brainstorm ${brainstormId}`);
+    return { statusCode: 401 };
+  }
+
+  // Broadcast the message to everyone listening
+  const { connectionIds } = await data.brainstormConnections.get({ brainstormId });
+  const broadcasts = connectionIds.values.map((connectionId) => {
+    arc.ws.send({
+      id: connectionId,
+      payload: { text }
+    });
+  });
+  await Promise.all(broadcasts);
+
+  return { statusCode: 200 };
 }

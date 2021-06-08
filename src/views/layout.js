@@ -7,7 +7,7 @@ module.exports = function Layout(props) {
   const appVars = {
     needsAuth: !!props.needsAuth,
     id: props.id,
-    wsUrl: process.env.ARC_WSS_URL
+    wsUrl: process.env.ARC_WSS_URL + `?id=${props.id}`
   };
 
   if (!props.needsAuth) {
