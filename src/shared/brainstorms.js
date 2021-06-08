@@ -10,7 +10,7 @@ module.exports = {
    * @returns Object
    * @async
    */
-  findBrainstorm: async (hashedId) => {
+  find: async (hashedId) => {
     if (!hashedId) return null;
 
     const id = parseInt(hashids.decode(hashedId));
@@ -21,5 +21,38 @@ module.exports = {
     }
 
     return brainstorm;
+  },
+
+  create: async(props) => {
+    const id = parseInt(String(~~(Math.random() * 9999)) + ~~(Date.now() / 1000));
+    const data = await arc.tables();
+    const brainstorm = await data.brainstorms.put({ id, ...props });
+    return brainstorm;
+  },
+
+  addConnectionId: async (hashedId, connectionId) => {
+    const id = parseInt(hashids.decode(hashedId));
+    const data = await arc.tables();
+    return data.brainstorms.update({
+      Key: { id },
+      UpdateExpression:  'ADD connectionIds :connectionId',
+      ExpressionAttributeValues: {
+        ':connectionId': data._doc.createSet([connectionId])
+      },
+      ReturnValues : 'UPDATED_NEW'
+    });
+  },
+
+  removeConnectionId: async (hashedId, connectionId) => {
+    const id = parseInt(hashids.decode(hashedId));
+    const data = await arc.tables();
+    return data.brainstorms.update({
+      Key: { id },
+      UpdateExpression:  'DELETE connectionIds :connectionId',
+      ExpressionAttributeValues: {
+        ':connectionId': data._doc.createSet([connectionId])
+      },
+      ReturnValues : 'UPDATED_NEW'
+    });
   }
 }

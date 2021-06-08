@@ -4,53 +4,11 @@
 
 const arc = require('@architect/functions');
 const parseBody = arc.http.helpers.bodyParser;
+const { create } = require('@architect/shared/brainstorms');
+const { isAuthorized } = require('@architect/shared/auth');
 
 const Hashids = require('hashids/cjs');
 const hashids = new Hashids();
-
-/**
- * TODO: Replace this with the shared module function
- * @param {String} hashedId 
- * @returns boolean
- */
-async function isAuthorized(hashedId, password) {
-  // Check that password is valid for given brainstorm
-  const id = parseInt(hashids.decode(hashedId));
-  const data = await arc.tables();
-  const brainstorm = await data.brainstorms.get({ id });
-  if (brainstorm === null) {
-    return false;
-  }
-
-  // TODO: What happens if it's not found?
-  // TODO: Should passwords be salted and hashed?
-  return (password === brainstorm.password);
-}
-
-/**
- * Generates a unique ID based on a random number and time stamp.
- * @returns Number
- */
-function generateId() {
-  return parseInt(String(~~(Math.random() * 9999)) + ~~(Date.now() / 1000));
-}
-
-/**
- * Creates a new brainstorm.
- * @param {String} title 
- * @param {String} password 
- */
-async function createBrainstorm(title, password) {
-  const id = generateId();
-  const data = await arc.tables();
-  brainstorm = {
-    id,
-    title,
-    password
-  };
-  await data.brainstorms.put(brainstorm);
-  return id;
-}
 
 exports.handler = async function http(req) {
   const reqBody = parseBody(req);
@@ -59,13 +17,15 @@ exports.handler = async function http(req) {
   console.log('post-brainstorm', title, password, reqBody.id)
 
   let hashedId;
-  let isAuthed = false; // TODO: Fix naming
+  let isAuthed = false;
 
   if (reqBody.id) {
     hashedId = reqBody.id;
-    isAuthed = await isAuthorized(hashedId, password);
+    isAuthed = await isAuthorized(req, hashedId);
   } else {
-    const id = await createBrainstorm(title, password);
+    const expires = new Date();
+    expires.setDate(expires.getDate() + 14); // iso 8601
+    const { id } = await create({ title, password, expires });
     hashedId = hashids.encode(id);
     isAuthed = true;
   }
