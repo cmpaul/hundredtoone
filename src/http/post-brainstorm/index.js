@@ -23,8 +23,12 @@ exports.handler = async function http(req) {
     hashedId = reqBody.id;
     isAuthed = await isAuthorized(req, hashedId);
   } else {
-    const expires = new Date();
-    expires.setDate(expires.getDate() + 14); // iso 8601
+    // Expire in 2 weeks
+    // TODO: Make this configurable
+    const expiresDate = new Date();
+    expiresDate.setDate(expiresDate.getDate() + 14);
+    const expires = ~~(expiresDate.getTime() / 1000);
+
     const { id } = await create({ title, password, expires });
     hashedId = hashids.encode(id);
     isAuthed = true;
