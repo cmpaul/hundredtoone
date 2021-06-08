@@ -9,12 +9,19 @@
   const ws = new WebSocket(wsUrl);
   ws.onopen = () => {
     value += `${new Date(Date.now()).toISOString()} - opened\n`;
+    ws.send(JSON.stringify({ getHistory: true }));
   }
   ws.onclose = () => {
     value += `${new Date(Date.now()).toISOString()} - closed\n`;
   }
   ws.onmessage = (e) => {
-    value += `${JSON.parse(e.data).text}\n`;
+    const {history, text} = JSON.parse(e.data);
+    if (history) {
+      if (history.length === 0) return;
+      value += history.map(i => i.text).join('\n') + '\n';
+    } else {
+      value += `${text}\n`;
+    }
   }
   ws.onerror = console.log
   const onkeyup = (e) => {

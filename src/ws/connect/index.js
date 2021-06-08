@@ -8,13 +8,13 @@ exports.handler = async function ws(event) {
   const brainstorm = await find(brainstormId);
   if (!brainstorm) {
     console.log(`ws-connect: No brainstorm found for ID ${brainstormId}`);
-    return {statusCode: 404};
+    return { statusCode: 404 };
   }
 
   const isAuthed = await isAuthorized(event, brainstormId);
   if (!isAuthed) {
     console.log(`ws-connect: Not authorized to access brainstorm ${brainstormId}`);
-    return {statusCode: 401};
+    return { statusCode: 401 };
   }
 
   const connectionId = event.requestContext.connectionId;
@@ -30,5 +30,5 @@ exports.handler = async function ws(event) {
     })
   ]);
 
-  return {statusCode: 200}
+  return { statusCode: 200 };
 }

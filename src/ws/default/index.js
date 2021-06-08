@@ -1,10 +1,10 @@
 let arc = require('@architect/functions');
 const { isAuthorized } = require('@architect/shared/auth');
-const { find } = require('@architect/shared/brainstorms');
+const { find, addIdea } = require('@architect/shared/brainstorms');
 
 exports.handler = async function ws(event) {
-  let connectionId = event.requestContext.connectionId
-  let { text } = JSON.parse(event.body);
+  const connectionId = event.requestContext.connectionId
+  const {getHistory, ...idea} = JSON.parse(event.body);
 
   // Look up the brainstorm
   const data = await arc.tables();
@@ -22,14 +22,34 @@ exports.handler = async function ws(event) {
     return { statusCode: 401 };
   }
 
-  // Broadcast the message to everyone listening
-  const broadcasts = brainstorm.connectionIds.values.map((connectionId) => {
-    arc.ws.send({
-      id: connectionId,
-      payload: { text }
+  if (getHistory) {
+    // Allow history to be sent when requested. I'm not relying on the history
+    // being rendered to the page, because there could be a delay between page load
+    // and WS connection, resulting in a gap of items.
+    if (brainstorm.ideas.length > 0) {
+      await arc.ws.send({
+        id: connectionId,
+        payload: { history: brainstorm.ideas }
+      });
+    }
+  } else {
+    const newIdea = {
+      ...idea,
+      stars: 0,
+      createdAt: Date.now(),
+      createdBy: connectionId // TODO: Figure out user mapping (likely store on session)
+    }
+    await addIdea(brainstormId, newIdea);
+  
+    // Broadcast the message to everyone listening
+    const broadcasts = brainstorm.connectionIds.values.map((connectionId) => {
+      arc.ws.send({
+        id: connectionId,
+        payload: newIdea
+      });
     });
-  });
-  await Promise.all(broadcasts);
+    await Promise.all(broadcasts);
+  }
 
   return { statusCode: 200 };
 }

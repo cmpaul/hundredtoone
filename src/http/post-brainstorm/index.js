@@ -14,7 +14,7 @@ exports.handler = async function http(req) {
   const reqBody = parseBody(req);
   const title = reqBody.title;
   const password = reqBody.password;
-  console.log('post-brainstorm', title, password, reqBody.id)
+  console.log('post-brainstorm', title, password, reqBody.id || null)
 
   let hashedId;
   let isAuthed = false;
@@ -23,13 +23,18 @@ exports.handler = async function http(req) {
     hashedId = reqBody.id;
     isAuthed = await isAuthorized(req, hashedId);
   } else {
-    // Expire in 2 weeks
-    // TODO: Make this configurable
     const expiresDate = new Date();
-    expiresDate.setDate(expiresDate.getDate() + 14);
+    expiresDate.setDate(expiresDate.getDate() + 14); // TODO: Make this configurable
     const expires = ~~(expiresDate.getTime() / 1000);
+    const ideas = [];
+    const brainstorm = {
+      title,
+      password,
+      expires,
+      ideas
+    };
 
-    const { id } = await create({ title, password, expires });
+    const { id } = await create(brainstorm);
     hashedId = hashids.encode(id);
     isAuthed = true;
   }
