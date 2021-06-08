@@ -10,13 +10,16 @@ get /brainstorm/:id
 @tables
 brainstorms
   encrypt true
+  expires TTL
   id *Number
   title String
   password String
-brainstormConnections
-  brainstormId *String
+  createdAt Date
+  endedAt Date
   connectionIds StringSet
+  ideas List
 connectionBrainstorm
+  expires TTL
   connectionId *String
   brainstormId String
 
