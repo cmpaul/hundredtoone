@@ -12,7 +12,7 @@ exports.handler = async function ws(event) {
     return {statusCode: 404};
   }
 
-  const isAuthorized = await auth.isAuthorized(event, brainstorm);
+  const isAuthorized = await auth.isAuthorized(event, brainstorm, brainstormId);
   if (!isAuthorized) {
     console.log(`ws-connect: Not authorized to access brainstorm ${brainstormId}`);
     return {statusCode: 401};

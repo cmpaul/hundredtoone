@@ -3,7 +3,7 @@
 </script>
 
 <div class="container">
-  <form action="/brainstorm" method="POST">
+  <form class="start-form" action="/brainstorm" method="POST">
     <div class="d-grid gap-2 col-lg-4 col-sm-6 mx-auto">
       <input name="id" type="hidden" value={id} />
       <input name="password" type="password" />

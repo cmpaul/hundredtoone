@@ -56,21 +56,22 @@ exports.handler = async function http(req) {
   const reqBody = parseBody(req);
   const title = reqBody.title;
   const password = reqBody.password;
+  console.log('post-brainstorm', title, password, reqBody.id)
 
   let hashedId;
-  let isAuthorized = false;
+  let isAuthed = false; // TODO: Fix naming
 
   if (reqBody.id) {
     hashedId = reqBody.id;
-    isAuthorized = await isAuthorized(hashedId, password);
+    isAuthed = await isAuthorized(hashedId, password);
   } else {
     const id = await createBrainstorm(title, password);
     hashedId = hashids.encode(id);
-    isAuthorized = true;
+    isAuthed = true;
   }
 
   const session = await arc.http.session.read(req);
-  if (isAuthorized) {
+  if (isAuthed) {
     // Store authorization in a session cookie
     const authorized = session.authorized || {};
     authorized[hashedId] = true;

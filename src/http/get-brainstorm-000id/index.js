@@ -18,7 +18,7 @@ exports.handler = async function http (req) {
     };
   }
 
-  const isAuthorized = await auth.isAuthorized(req, brainstorm);
+  const isAuthorized = await auth.isAuthorized(req, brainstorm, hashedId);
   if (!isAuthorized) {
     return {
       statusCode: 200,
