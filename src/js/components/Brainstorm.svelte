@@ -28,7 +28,7 @@
 <div class="container">
   <Row>
     <Col>
-      <p>{title === null ? `Brainstorm: ${id}` : title}</p>
+      <p>{title === null ? `Brainstorm ${id}` : title}</p>
     </Col>
   </Row>
   <Row>

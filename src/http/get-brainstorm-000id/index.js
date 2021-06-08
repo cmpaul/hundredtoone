@@ -6,7 +6,7 @@ const Layout = require('@architect/views/layout')
 const auth = require('@architect/shared/auth');
 const { findBrainstorm } = require('@architect/shared/brainstorms');
 
-exports.handler = async function http (req) {
+exports.handler = async function http(req) {
   const hashedId = req.pathParameters['id'];
   const brainstorm = await findBrainstorm(hashedId);
   if (!brainstorm) {
