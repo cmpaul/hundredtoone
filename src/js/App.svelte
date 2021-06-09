@@ -8,8 +8,7 @@
 </script>
 
 <main>
-  <Styles />
-  <Nav />
+  <!-- <Styles /> -->
 
   {#if brainstorm.id}
     {#if needsAuth}
