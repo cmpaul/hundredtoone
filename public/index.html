@@ -23,8 +23,8 @@
 					<label for="title">
 						What do you need to brainstorm?
 					</label>
-					<input id="title" name="title" placeholder="My next novel 📖, Family trip ✈, Team Projects 👷‍♀️, etc." />
-					<button class="btn btn-lg btn-primary" type="submit">Start!</button>
+					<input id="title" name="title" placeholder="My next novel 📖, Family trip ✈, Team Projects 👷‍♀️, etc."/>
+					<input id="start" class="btn btn-lg btn-primary" type="submit" value="Start!" disabled />
 				</div>
 			</form>
 			<hr />
@@ -57,6 +57,14 @@
 		var input = document.getElementById('title');
 		input.focus();
 		input.select();
+		var submit = document.getElementById('start');
+		input.onchange = (e) => {
+			if (e.target.value.length > 0) {
+				submit.disabled = false;
+			} else {
+				submit.disabled = true;
+			}
+		};
 	</script>
 </body>
 </html>

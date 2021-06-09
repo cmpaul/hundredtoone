@@ -21,9 +21,20 @@ exports.handler = async function http(req) {
   let isAuthed = false;
 
   if (reqBody.id) {
+    // Loading an existing brainstorm
     hashedId = reqBody.id;
     isAuthed = await isAuthorized(req, hashedId);
   } else {
+    // Creating a new brainstorm
+    if (!title) {
+      // TODO: Flash error?
+      return {
+        headers: {
+          'Location': url('/')
+        },
+        statusCode: 302
+      }
+    }
     const expiresDate = new Date();
     expiresDate.setDate(expiresDate.getDate() + 14); // TODO: Make this configurable
     const expires = ~~(expiresDate.getTime() / 1000);
