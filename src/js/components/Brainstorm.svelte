@@ -35,7 +35,7 @@
 <div class="container">
   <Row>
     <Col>
-      <p>{title === null ? `Brainstorm ${id}` : title}</p>
+      <h3>{title === null ? `Brainstorm ${id}` : title}</h3>
     </Col>
   </Row>
   <Row>
@@ -59,5 +59,8 @@
     width: 100%;
     height: 600px;
     font-family:'Courier New', Courier, monospace;
+  }
+  .container {
+    margin-top: 40px;
   }
 </style>
