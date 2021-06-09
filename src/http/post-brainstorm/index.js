@@ -6,6 +6,7 @@ const arc = require('@architect/functions');
 const parseBody = arc.http.helpers.bodyParser;
 const { create } = require('@architect/shared/brainstorms');
 const { isAuthorized } = require('@architect/shared/auth');
+const url = arc.http.helpers.url
 
 const Hashids = require('hashids/cjs');
 const hashids = new Hashids();
@@ -50,7 +51,7 @@ exports.handler = async function http(req) {
 
   return {
     headers: {
-      'Location': `/brainstorm/${hashedId}`,
+      'Location': url(`/brainstorm/${hashedId}`),
       'set-cookie': cookie,
     },
     statusCode: 302

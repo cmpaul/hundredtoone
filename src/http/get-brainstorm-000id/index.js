@@ -5,6 +5,8 @@
 const Layout = require('@architect/views/layout')
 const { isAuthorized } = require('@architect/shared/auth');
 const { find } = require('@architect/shared/brainstorms');
+const arc = require('@architect/functions');
+const url = arc.http.helpers.url
 
 exports.handler = async function http(req) {
   const hashedId = req.pathParameters['id'];
@@ -13,7 +15,7 @@ exports.handler = async function http(req) {
     return {
       statusCode: 302,
       headers: {
-        'Location': '/'
+        'Location': url('/')
       }
     };
   }
