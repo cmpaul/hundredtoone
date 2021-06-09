@@ -20,9 +20,11 @@
 		<div class="container">
 			<form class="start-form" action="/brainstorm" method="POST">
 				<div class="d-grid gap-2 col-lg-4 col-sm-6 mx-auto">
+					<label for="title">
+						What do you need to brainstorm?
+					</label>
+					<input id="title" name="title" placeholder="My next novel 📖, Family trip ✈, Team Projects 👷‍♀️, etc." />
 					<button class="btn btn-lg btn-primary" type="submit">Start!</button>
-					<input name="title" placeholder="(Optional) Title" />
-					<input name="password" placeholder="(Optional) Password" />
 				</div>
 			</form>
 			<hr />
@@ -51,5 +53,10 @@
 			<h3>⚡🧠🧠🧠⚡</h3>
 		</div>
 	</main>
+	<script type="text/javascript">
+		var input = document.getElementById('title');
+		input.focus();
+		input.select();
+	</script>
 </body>
 </html>
