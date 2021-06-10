@@ -6,7 +6,6 @@ const arc = require('@architect/functions');
 const parseBody = arc.http.helpers.bodyParser;
 const { create } = require('@architect/shared/brainstorms');
 const { isAuthorized } = require('@architect/shared/auth');
-const url = arc.http.helpers.url
 
 const Hashids = require('hashids/cjs');
 const hashids = new Hashids();
@@ -28,9 +27,10 @@ exports.handler = async function http(req) {
     // Creating a new brainstorm
     if (!title) {
       // TODO: Flash error?
+      console.log('Unable to create brainstorm without a title');
       return {
         headers: {
-          'Location': url('/')
+          'Location': '/'
         },
         statusCode: 302
       }
