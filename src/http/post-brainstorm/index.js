@@ -62,7 +62,7 @@ exports.handler = async function http(req) {
 
   return {
     headers: {
-      'Location': url(`/brainstorm/${hashedId}`),
+      'Location': `/brainstorm/${hashedId}`,
       'set-cookie': cookie,
     },
     statusCode: 302
